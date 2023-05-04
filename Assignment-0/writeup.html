@@ -1,0 +1,52 @@
+<head>
+    <!-- the next three lines try to discourage browser from keeping page in cache -->
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="cache-control" content="no-store">
+    <title> COS426 Assignment 0 &mdash; Warm-up &mdash; Writeup</title>
+    <link href="css/style.css" type="text/css" rel="stylesheet"/>
+</head>
+
+<body>
+    <script src="js/student.js"> </script>
+    <script src="coursejs/writeup.js"> </script>
+    <div class="main_div">
+
+        <h1> <div class=assignment>COS426 Assignment 0</div>Warm-up &mdash; Batch Mode</h1>
+        <h2>Switch to: <a href='index.html'>Interactive Editor</a></h2>
+        <div class='selectable'>
+        <h2 id='student'></h2>
+
+        Features Implemented:
+<ul>
+<li>(1.0) <a href='#Fill'>Fill</a></li>
+<li>(2.0) <a href='#Brush'>Brush</a></li>
+<li>(2.0) <a href='#Soft+Brush'>Soft Brush</a></li>
+<li>(1.0) <a href='#Art+Contest'>Art Contest</a></li>
+        </ul></div>
+Late days were used for this assignment, but I had an extension from Professor Rusinkiewicz since I was in isolation for covid and had very bad symptoms for days.
+<p><hr><p><a name='Fill'></a><h2>Fill</h2><p><hr><p>
+Fill goes through each pixel in the image and changes the color to the user selected color. 
+
+<br>You can include as many results as you want, but please at least include the following results:<br> <a href='batch.html?Push_Image=flower.jpg&Fill=[0.142370997229,0.142509677694,0.764679664899,1]'>Push_Image=flower.jpg&Fill=[0.142370997229,0.142509677694,0.764679664899,1]</a>
+
+<br><img src='results/Fill result.png'><p><hr><p><a name='Brush'></a><h2>Brush</h2><p><hr><p>
+Brush gets the current center coordinates from the array of centers and uses the brush radius to calculate which pixels to set to the selected color. Setting the pixel color is constratined by the distance between the pixel being set and the original center of the brush. If the pixel being changed is further from the center than the allocated radius, it is not changed because it would not be in the brush's area. 
+
+<br>You can include as many results as you want, but please at least include the following results:<br> <a href='batch.html?Push_Image=flower.jpg&Brush=16;[0.0968858131488,0.0968858131488,0.705882352941,1];x222y165x303y160x266y234'>Push_Image=flower.jpg&Brush=16;[0.0968858131488,0.0968858131488,0.705882352941,1];x222y165x303y160x266y234</a>
+
+<br><img src='results/Brush Result 1.png'><br> <a href='batch.html?Push_Image=town.jpg&Brush=10;[1,1,1,1];x475y83x304y100x135y187'>Push_Image=town.jpg&Brush=10;[1,1,1,1];x475y83x304y100x135y187</a>
+
+<br><img src='results/Brush Result.png'><p><hr><p><a name='Soft+Brush'></a><h2>Soft Brush</h2><p><hr><p>
+Soft brush is similar to the implemented brush function. However, the color the image pixel is changed to is calculated using alpha blending formulas, which muliplies the opacity value with the current brush color added to the muliplied image pixel color and 1 minus the opacity. The opacity of the brush is linearly decreasing as the pixels get further from the center of the brush stroke. 
+
+<br>You can include as many results as you want, but please at least include the following results:<br> <a href='batch.html?Push_Image=flower.jpg&Soft_Brush=91;[1,1,1,1];1;x269y193'>Push_Image=flower.jpg&Soft_Brush=91;[1,1,1,1];1;x269y193</a>
+
+<br><img src='results/Soft Brush Result.png'><p><hr><p><a name='Art+Contest'></a><h2>Art Contest</h2><p><hr><p>
+Custom Brush Filter was inspired by TV static. By using Math.random, the code has a random chance of setting a pixel to black. This chance is increased as value is increased by the user. 
+<br><img src='results/CustomBrush Value 0.png'>
+<br><img src='results/CustomBrush Value 0.5.png'>
+<br><img src='results/CustomBrush Value 1.png'>
+<br>You can include as many results as you want, but please at least include the following results:    </div>
+</body>
+</html>

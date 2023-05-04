@@ -1,0 +1,214 @@
+<head>
+    <!-- the next three lines try to discourage browser from keeping page in cache -->
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="cache-control" content="no-store">
+
+    <title> COS426 Assignment 1 &mdash; Image Processing &mdash; Writeup</title>
+    <link href="css/style.css" type="text/css" rel="stylesheet"/>
+</head>
+
+<body>
+    <script src="js/student.js"> </script>
+    <script src="coursejs/writeup.js"> </script>
+    <div class="main_div">
+
+        <h1> <div class=assignment>COS426 Assignment 1</div>Image Processing &mdash; Batch Mode</h1>
+        <h2>Switch to: <a href='index.html'>Interactive Editor</a></h2>
+        <div class='selectable'>
+        <h2 id='student'></h2>
+
+        Features Implemented:
+<ul>
+<li>(0.0) <a href='#Brightness'>Brightness</a></li>
+<li>(0.5) <a href='#Contrast'>Contrast</a></li>
+<li>(0.5) <a href='#Gamma'>Gamma</a></li>
+<li>(2.0) <a href='#Histogram+equalization'>Histogram equalization</a></li>
+<li>(0.5) <a href='#Saturation'>Saturation</a></li>
+<li>(1.5) <a href='#White+balance'>White balance</a></li>
+<li>(2.0) <a href='#Histogram+matching'>Histogram matching</a></li>
+<li>(1.0) <a href='#Gaussian'>Gaussian</a></li>
+<li>(0.5) <a href='#Sharpen'>Sharpen</a></li>
+<li>(1.0) <a href='#Median+filter'>Median filter</a></li>
+<li>(2.0) <a href='#Bilateral+filter'>Bilateral filter</a></li>
+<li>(0.0) <a href='#Quantize'>Quantize</a></li>
+<li>(0.5) <a href='#Random+dither'>Random dither</a></li>
+<li>(1.0) <a href='#Floyd-Steinberg+dither'>Floyd-Steinberg dither</a></li>
+<li>(1.0) <a href='#Ordered+dither'>Ordered dither</a></li>
+<li>(1.0) <a href='#Sampling'>Sampling</a></li>
+<li>(0.5) <a href='#Translate'>Translate</a></li>
+<li>(0.5) <a href='#Scale'>Scale</a></li>
+<li>(1.0) <a href='#Composite'>Composite</a></li>
+<li>(3.0) <a href='#Morph'>Morph</a></li>
+        </ul></div>
+
+<p><hr><p><a name='Brightness'></a><h2>Brightness</h2><p><hr><p>
+
+    This feature was implemented by the course staff.
+    I used it as an example of how to loop over the pixels in an image.
+    <p>
+    Here is an example output where the image is made brigher with
+    <a href='batch.html?Push%20Image=flower.jpg&Brightness=0.3'>the
+    luminance slider set to 0.3</a>:
+    <p>
+    <img src='results/luminance0.3.png'>
+    <p>
+    Here is an example output where the image is made darker with
+    <a href='batch.html?Push%20Image=flower.jpg&Brightness=-0.5'>the
+    luminance slider set to -0.5</a>:
+    <p>
+    <img src='results/luminance-0.5.png'>
+    <p>
+    I did not encounter any particular challenges in implementing this.
+
+<br>You can include as many results as you want, but please at least include the following results:<p><hr><p><a name='Contrast'></a><h2>Contrast</h2><p><hr><p>
+Contrast gets each pixel in the image and changes each color channel by the formula: value = (value - 0.5) * (tan ((contrast + 1) * PI/4) ) + 0.5 where value is the color channel data.
+
+<br><br> <a href='batch.html?Push_Image=leaves.jpg&Contrast=-1'>Push_Image=leaves.jpg&Contrast=-1</a>
+
+<br><img src='results/contrast-1.png'><br> <a href='batch.html?Push_Image=leaves.jpg&Contrast=0.7'>Push_Image=leaves.jpg&Contrast=0.7</a>
+
+<br><img src='results/contrast0.7.png'><br> <a href='batch.html?Push_Image=leaves.jpg&Contrast=-0.8'>Push_Image=leaves.jpg&Contrast=-0.8</a>
+
+<br><img src='results/contrast-0.8.png'><p><hr><p><a name='Gamma'></a><h2>Gamma</h2><p><hr><p>
+Gamma changes each pixel in the image by applying a gamma correction using the given gamma value. To apply the correction, I just mulitplied each color channel by the given gamma value. 
+
+<br><br> <a href='batch.html?Push_Image=mesa.jpg&Gamma=1'>Push_Image=mesa.jpg&Gamma=1</a>
+
+<br><img src='results/gamma1.png'><br> <a href='batch.html?Push_Image=mesa.jpg&Gamma=-1.6'>Push_Image=mesa.jpg&Gamma=-1.6</a>
+
+<br><img src='results/gamma-1.6.png'><p><hr><p><a name='Histogram+equalization'></a><h2>Histogram equalization</h2><p><hr><p>
+Histogram equalization filter creates a luminance map of each pixel in the image's luminance, which is then sorted.
+Using the sorted luminosity map, we reassign each pixel's luminance to the given formula: (cdf(x) * (L - 1)) / (L-1). L is the number of unique luminosity levels in the image and cdf is a sorted map of the gray levels and cumlative count of each level.
+
+<br><br> <a href='batch.html?Push_Image=flower.jpg&Histogram_Equalization='>Push_Image=flower.jpg&Histogram_Equalization=</a>
+
+<br><img src='results/histogramEqualizationFlower.png'><br> <a href='batch.html?Push_Image=leaves.jpg&Histogram_Equalization='>Push_Image=leaves.jpg&Histogram_Equalization=</a>
+
+<br><img src='results/histogramEqualizationLeaves.png'><p><hr><p><a name='Saturation'></a><h2>Saturation</h2><p><hr><p>
+Saturation applies the formula: [pixel = pixel + (pixel - luminance) * ratio] to each color channel for each pixel in the image. Luminance is calculated using this formula which is given: 
+[const luminance = 0.2126 * pixel.data[0] + 0.7152 * pixel.data[1] + 0.0722 * pixel.data[2]].
+<br><br> <a href='batch.html?Push_Image=leaves.jpg&Saturation=1'>Push_Image=leaves.jpg&Saturation=1</a>
+
+<br><img src='results/saturation1.png'><br> <a href='batch.html?Push_Image=leaves.jpg&Saturation=-0.5'>Push_Image=leaves.jpg&Saturation=-0.5</a>
+
+<br><img src='results/saturation0.5.png'><p><hr><p><a name='White+balance'></a><h2>White balance</h2><p><hr><p>
+White balance filter adjusts the white balance of the image by using the Von Kries method. First, I converted the image from RGB to the LMS color space by using the methods provided: rgbToXyz() and xyzToLms().
+Then, I divided each channel in the pixel's LMS channels by the LMS channels of white, and converted the pixel back to RGB. 
+
+<br><br> <a href='batch.html?Push_Image=town.jpg&White_Balance=[0.5,0.5,0.5,1]'>Push_Image=town.jpg&White_Balance=[0.5,0.5,0.5,1]</a>
+
+<br><img src='results/whitebalance.png'><p><hr><p><a name='Histogram+matching'></a><h2>Histogram matching</h2><p><hr><p>
+Histogram matching works similarly to histogram equalization. I used the same method of making a luminance map and sorting the contents to a cdf map for the reference image pixel data. 
+Then, I did the same thing with the image in which the filter is being applied to. Using the two maps, I equalized the pixels of the image using the lumanance values from the cdfMap of the reference image. 
+<br><br> <a href='batch.html?Push_Image=leaves.jpg&Push_Image=flower.jpg&Histogram_Match='>Push_Image=leaves.jpg&Push_Image=flower.jpg&Histogram_Match=</a>
+
+<br><img src='results/histogramMatching.png'><p><hr><p><a name='Gaussian'></a><h2>Gaussian</h2><p><hr><p>
+Gaussian goes through each pixel in the image and uses the filter window size of [-winR, winR] where winR = Math.round(sigma * 3). Sigma is a given value. The gaussian filter is then applied to 
+each pixel's color channel by doing: colorChannel = colorChannel + matrix[pos] * colorChannelData. colorChannel is updated as you go through the gaussian filter kernel. The resulting new pixel uses 
+each added colorChannel result divided by the weight sum so the average color does not change. All of this is done first horizontally
+to the original image, putting the new pixels into a new image. Then, that new image is put through the same filter process, however, this time the kernel is applied vertically through the image's pixels. 
+The new pixels from the vertical application are put into another new image which is the original image with the fully applied gausisan filter. 
+<br><br> <a href='batch.html?Push_Image=leaves.jpg&Gaussian=4'>Push_Image=leaves.jpg&Gaussian=4</a>
+
+<br><img src='results/gaussian4.png'><br> <a href='batch.html?Push_Image=man.jpg&Gaussian=7'>Push_Image=man.jpg&Gaussian=7</a>
+
+<br><img src='results/gaussian7.png'><p><hr><p><a name='Sharpen'></a><h2>Sharpen</h2><p><hr><p>
+Sharpen applies a given sharpen filter kernel: [[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]] to each corresponding color channel of each pixel of the image. Each colorChannel's data needs to be 
+divided by the total weight to normalize the pixel values (ie: average color does not change).
+<br><br> <a href='batch.html?Push_Image=leaves.jpg&Sharpen='>Push_Image=leaves.jpg&Sharpen=</a>
+
+<br><img src='results/sharpenLeaves.png'><br> <a href='batch.html?Push_Image=woman.jpg&Sharpen='>Push_Image=woman.jpg&Sharpen=</a>
+
+<br><img src='results/sharpenWoman.png'><p><hr><p><a name='Median+filter'></a><h2>Median filter</h2><p><hr><p>
+The median filter takes each pixel's color channels' values within the window (x - winR, y - winR) to (x + winR, y + winR) and sorts each color channel data. This window is also known as the pixel's neighborhood.
+The pixel is then set as the median value of the neighborhood's pixels' corresponding color channel values.
+
+<br><br> <a href='batch.html?Push_Image=leaves.jpg&Median=3'>Push_Image=leaves.jpg&Median=3</a>
+
+<br><img src='results/median3.png'><br> <a href='batch.html?Push_Image=leaves.jpg&Median=5'>Push_Image=leaves.jpg&Median=5</a>
+
+<br><img src='results/median5.png'><br> <a href='batch.html?Push_Image=leaves.jpg&Median=8'>Push_Image=leaves.jpg&Median=8</a>
+
+<br><img src='results/median8.png'><p><hr><p><a name='Bilateral+filter'></a><h2>Bilateral filter</h2><p><hr><p>
+Bilateral Filter takes each pixel in the image and each pixel in the window size of (Math.round(2*max(sigmaR,sigmaS))*2 + 1) and finds the value of the spatial distance and color distance between the two pixels. 
+These values are calculated using the given formula in precept 1. The weight is then calculated using e^(spatialDistance + colorDistance) and applied to the pixel color channel. This application is done
+to each original pixel by the number of pixels within the winR sized window. The outputed pixel is the sum of each application to each color channel. 
+Finally, each newly summed color channel is divided by the sum of the weights for normalization and the pixel is clamped before getting set into a returned, new image. 
+<br><br> <a href='batch.html?Push_Image=mesa.jpg&Bilateral=4;2'>Push_Image=mesa.jpg&Bilateral=4;2</a>
+
+<br><img src='results/bilateral4;2.png'><br> <a href='batch.html?Push_Image=mesa.jpg&Bilateral=5;3'>Push_Image=mesa.jpg&Bilateral=5;3</a>
+
+<br><img src='results/bilateral5;3.png'><p><hr><p><a name='Random+dither'></a><h2>Random dither</h2><p><hr><p>
+Random dithering changes each pixel's color channel by adding a random value: (Math.random() - 0.5), then quantizing the color channel's value with: Math.round(pixel.data[c]) in the image.
+
+<br><br> <a href='batch.html?Push_Image=mesa.jpg&Random='>Push_Image=mesa.jpg&Random=</a>
+
+<br><img src='results/randomDither.png'><p><hr><p><a name='Floyd-Steinberg+dither'></a><h2>Floyd-Steinberg dither</h2><p><hr><p>
+Floyd-Steinberg dither gets each pixel's data and each of its neighboring pixels (immediately east, south east, south, south west relative to the orignial pixel). The original pixel is quantized
+and the quantization error is defined as the difference beteween the original pixel's color channel data and the new quantized value. Each of the neighboring pixel's color channels' values
+are added to a (given fraction * quantized error). The new pixel values are then set to their original positions in the image. 
+
+<br><br> <a href='batch.html?Push_Image=mesa.jpg&Floyd-Steinberg='>Push_Image=mesa.jpg&Floyd-Steinberg=</a>
+
+<br><img src='results/floydSteinberg.png'><p><hr><p><a name='Ordered+dither'></a><h2>Ordered dither</h2><p><hr><p>
+Ordered dither uses a given kernel "d". By following the psudo code from precept 1, I was able to implement the function. As defined in the slides, m = 4, i = xPosition mod m, and j = yPosition mod m. 
+By going through all the pixels in the image, we are able to caluclate err = (currentPixel color value) – floor_quantize(currentPixel color value)) and threshold = (d(i, j)+ 1) / (m^2 + 1).
+If the err > threshold, the pixel data is quantized and rounded up, else, the pixel is quantized and rounded down. 
+
+<br><br> <a href='batch.html?Push_Image=mesa.jpg&Ordered='>Push_Image=mesa.jpg&Ordered=</a>
+
+<br><img src='results/orderedDither.png'><p><hr><p><a name='Sampling'></a><h2>Sampling</h2><p><hr><p>
+I followed the bilinear sampling filter slide in Precept 1. Using the formula on the slide, a new pixel is able to be defined. Important varibles to note are:
+ceilingX = Math.ceil(x) = x2;
+ceilingY = Math.ceil(y) = y2;
+floorX = Math.floor(x) =  x1;
+floorY = Math.floor(y) = y1;
+
+Gaussain sampling goes through the window: (-winR, -winR) to (winR, winR) and using the gaussian value defined by the given equation: Math.exp(-(xPos**2)/(2*sigma**2)),
+changes the pixel value to the desired gaussian filter value. The pixel's color channel is then divided by the sum of all gaussian values to normalize the values before 
+returning the new pixel. 
+
+Point sampling was given. 
+
+<br><p><hr><p><a name='Translate'></a><h2>Translate</h2><p><hr><p>
+Translate moves the pixel a given x spaces and y spaces over by adding the given offset to the original pixel's position. Note that there is a bounds of the original image height and 
+width where the image can be translated over. 
+<br>Y<br> <a href='batch.html?Push_Image=flower.jpg&Translate=-317;-182;point'>Push_Image=flower.jpg&Translate=-317;-182;point</a>
+
+<br><img src='results/translatePoint.png'><br> <a href='batch.html?Push_Image=flower.jpg&Translate=-317;-182;bilinear'>Push_Image=flower.jpg&Translate=-317;-182;bilinear</a>
+
+<br><img src='results/translateBilinear.png'><br> <a href='batch.html?Push_Image=flower.jpg&Translate=-317;-182;gaussian'>Push_Image=flower.jpg&Translate=-317;-182;gaussian</a>
+
+<br><img src='results/translateGaussian.png'><p><hr><p><a name='Scale'></a><h2>Scale</h2><p><hr><p>
+Scale is given a ratio which is multiplied by the original image's width and height to find the new scaled image from that window of the original image. 
+<br><br> <a href='batch.html?Push_Image=mesa.jpg&Scale=2.03;point'>Push_Image=mesa.jpg&Scale=2.03;point</a>
+
+<br><img src='results/scalePoint.png'><br> <a href='batch.html?Push_Image=mesa.jpg&Scale=2.03;bilinear'>Push_Image=mesa.jpg&Scale=2.03;bilinear</a>
+
+<br><img src='results/scaleBilinear.png'><br> <a href='batch.html?Push_Image=mesa.jpg&Scale=2.03;gaussian'>Push_Image=mesa.jpg&Scale=2.03;gaussian</a>
+
+<br><img src='results/scaleGaussian.png'><p><hr><p><a name='Composite'></a><h2>Composite</h2><p><hr><p>
+Composite filter gets the background and forground's pixels and calculates the new pixel's color channel data using the given formula: 
+color channel data = alpha * (foreground piixel's color data) + (1 - alpha) * (background piixel's color data) where alpha is the foreground pixel's alpha. 
+
+<br><br> <a href='batch.html?Push_Image=man.jpg&Push_Image=doge.jpg&Push_Image=alpha.png&Get_Alpha=&Composite='>Push_Image=man.jpg&Push_Image=doge.jpg&Push_Image=alpha.png&Get_Alpha=&Composite=</a>
+
+<br><img src='results/composite.png'><p><hr><p><a name='Morph'></a><h2>Morph</h2><p><hr><p>
+Morph was the most complicated to implement. 
+Firstly, I had to get the warped lines array which contain the information from this given formula: line = (1 – alpha) * background_lines[i] + alpha * foreground_lines[i]
+where i is just the position in the given lines.initial dataset. 
+
+Then, I called my morph function with the intial image, then the final image and combined both outputed images to get the final morphed image. Note that the variable names correspond to the given diagram in precept2 slide 12.
+The morph function implements the given steps from precept2. To summerize, the warp function first calculates the projection of line PX onto line PQ, then the length of the line SX. Then, it calculates the unknown X' using the
+given equation on slide 14. The distance is then calculated accourding to the value of the projection of PX onto PQ (see slide 13). the weight is calculated using the given formula on slide 12: (length^p/(a+distance))^b, where p = 0.5,
+a = 0.01 and b = 2. The averages are then calculated using the rounded value of the (sum of X' coordinates multiplied by the calculated weight). Using these averages, morph makes a new pixel at these coordinates. 
+
+<br><br> <a href='batch.html?Push_Image=trump1.jpg&Push_Image=trump2.jpg&Morph=(0,1,0.1)'>Push_Image=trump1.jpg&Push_Image=trump2.jpg&Morph=(0,1,0.1)</a>
+
+<br><img src='results/morph.gif'>
+<p><hr><p><a name='Collaboration'></a><h2>Collaboration</h2><p><hr><p>
+                N/A
+    </div>
+</body>
+</html>
