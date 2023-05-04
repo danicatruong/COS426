@@ -1,0 +1,469 @@
+<html>
+
+<head>
+    <title> COS426 Assignment 2 &mdash; Modeling &mdash; Writeup</title>
+    <link href="css/style.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+    <script src="js/student.js"> </script>
+    <script src="coursejs/writeup.js"> </script>
+    <div class="top">
+        <div class="main_div">
+            <h1>
+                <div class=assignment>COS426 Assignment 2</div>Modeling &mdash; Writeup
+            </h1>
+            <h2>Switch to: <a href='index.html'>Interactive Editor</a></h2>
+            <br>
+            <div id='collaboration'>
+                <div>
+                Collaboration Statement:
+                </div>
+                    <br>
+                <div>
+                    <em>
+                        Under penalty of academic dishonesty (as outlined in RRR)
+                        my digital signature below verifies that the following is true:
+                        <ul>
+                            <p>
+                                that all images in this writeup were generated directly by my solution code
+                                or provided by the course staff (exception: art contest submissions
+                                may pass through intermediary software like GIMP)
+                            </p>
+                            <p>
+                                that no other student has viewed my writeup explanations
+                                or my writeup images
+                            </p>
+                            <p>
+                                that my solution code is my own work; particularly that
+                                my solution was not copied from any other
+                                student's solution code, and that no other student
+                                copied their solution directly code from me
+                            </p>
+                            <p>
+                                that I did not discuss assignment specifics or view
+                                the solution code of any other student besides that of my (optional) partner
+                            </p>
+                            <p>
+                                that I have followed all other course collaboration
+                                and course plagiarism policies as written on the course website.
+                            </p>
+                        </ul>
+                    </em>
+                    <p>
+                        <strong>
+                            Danica Truong  (dtruong)
+                        </strong>
+                    </p>
+
+                    <p>
+                        Collaborated with: Warren Quan
+                    </p>
+                    <br>
+                </div>
+            </div>
+            <div class='selectable'>
+                <h2 id='student'></h2>
+                <p>
+                    <strong>
+                        One (1) Late Day used on this assignment
+                    </strong>
+                </p>
+                Features Implemented:
+                <ul>
+                    <li>(0.0) <a href='#Translation'>Translation</a></li>
+                    <li>(1.0) <a href='#Rotation'>Rotation</a></li>
+                    <li>(0.5) <a href='#Scale'>Scale</a></li>
+                    <li>(2.0) <a href='#Traversal'>Traversal</a></li>
+                    <li>(0.5) <a href='#Face+Area'>Face Area</a></li>
+                    <li>(0.5) <a href='#Per-vertex+Normals'>Per-vertex Normals</a></li>
+                    <li>(0.5) <a href='#Average+Edge+Lengths'>Average Edge Lengths</a></li>
+                    <li>(1.0) <a href='#Twist'>Twist</a></li>
+                    <li>(1.0) <a href='#Inflate'>Inflate</a></li>
+                    <li>(1.0) <a href='#Wacky'>Wacky</a></li>
+                    <li>(1.0) <a href='#Noise'>Noise</a></li>
+                    <li>(1.0) <a href='#Uniform+Laplacian+Smoothing'>Uniform Laplacian Smoothing</a></li>
+                    <li>(1.0) <a href='#Uniform+Sharpening'>Uniform Sharpening</a></li>
+                    <li>(0.5) <a href='#Triangulate'>Triangulate</a></li>
+                    <li>(2.0) <a href='#Truncate'>Truncate</a></li>
+                    <li>(2.0) <a href='#Extrude'>Extrude</a></li>
+                    <li>(2.0) <a href='#Bevel'>Bevel</a></li>
+                    <li>(1.5) <a href='#Triangle+Topology'>Triangle Topology</a></li>
+                    <li>(1.5) <a href='#Loop+Subdivision'>Loop Subdivision</a></li>
+                    <li>(1.0) <a href='#Art+Contest'>Art Contest</a></li>
+                </ul>
+            </div>
+            <div>
+                <hr>
+                <a name='Translation'></a>
+                <h2>Translation</h2>
+
+                <hr>
+                <p>
+                    This feature was implemented by the course staff.
+                    I used it as an example of how to loop over the vertices of a mesh.
+                </p>
+
+                <p>
+                    Here is an example output where the mesh is translated
+                    <a href='batch.html?Base_Mesh=cube.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Translation=3;0;0'>
+                        by 3 along the x axis
+                    </a>:
+                    <br>
+                    <img src='results/translate3.png'>
+                </p>
+                <p>
+                    I did not encounter any particular challenges in implementing this.
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Rotation'></a>
+                <h2>Rotation</h2>
+                <hr>
+                <p>
+                    I used a Euler type in order to apply the rotation to the current positions of the vertexes. 
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=teapot.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Rotation=1;0;0'>
+                        Base_Mesh=teapot.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Rotation=1;0;0
+                    </a>
+                    <br>
+                    <img src='results/result2.png'>
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=teapot.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Rotation=0;0.75;0'>Base_Mesh=teapot.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Rotation=0;0.75;0</a>
+                    <br>
+                    <img src='results/rotate3.png'>
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=teapot.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Rotation=0;0;1.5'>Base_Mesh=teapot.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Rotation=0;0;1.5</a>
+                    <br>
+                    <img src='results/rotate4.png'>
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Scale'></a>
+                <h2>Scale</h2>
+                <hr>
+                <p>
+                    I looped through the vertexes and multiplied the vector by the given scalar s value.
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=cube.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Scale=0.5'>Base_Mesh=cube.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Scale=0.5</a>
+                    <br>
+                    <img src='results/scale1.png'>
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=cube.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Scale=2'>Base_Mesh=cube.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Scale=2</a>
+                    <br>
+                    <img src='results/scale2.png'>
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Traversal'></a>
+                <h2>Traversal</h2>
+                <hr>
+                <p>
+                    edgesOnFace: Looped through each halfedge on the given face and returned an array of all the halfedges found.
+                    facesOnFace: Looped through the given face's halfedges and found that halfedge's opposite's face which gives us the adjacent faces to the given face.
+                    verticesOnVertex: Looped through the given vertex's halfedges and found the halfedge's opposite's vertex which would give us all the neighboring vertices.
+                    edgesOnVertex: Looped through the given vertex's halfedges and found the opposite edges to that halfedge (which are the halfedges that will be pointing away from the given vertex v)
+                    facesOnVertex: Looped through the given vertex's halfedges and found the opposite halfedge's face which would give you the adjacent faces to the given vertex.
+                    verticesOnEdge: Returned both the given halfedge's vertex and the halfedge's opposite's vertex to find the two endpoints to the edge.
+                    facesOnEdge: Returned both the given halfedge's face and the hafledge's opposite's face to find the two faces adjacent to the edge.
+                    edgeBetweenVertices: By using the already implemented function edgesOnVertex on the given vertext v1, we can loop through the outputed array of halfedges and compare those halfedges' vertex positions with the given v2's position to find the edge that points to both v1 and v2. 
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Face+Area'></a>
+                <h2>Face Area</h2>
+                <hr>
+                <p>
+                    In order to calculate the given face area, I found all the vertices on the face using the implemented verticesOnFace function. Using the outputed array of vertices, I looped through the array in order and found the area of the triangle comprised of 3 vertices from the array
+                    To find the area of the triangle, I used the vector3's Triangle constructor and called .getArea() on said triangle.
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Per-vertex+Normals'></a>
+                <h2>Per-vertex Normals</h2>
+                <hr>
+                <p>
+                    To calculate the vertex normal of given vertex v, I found the faces on the vertex using the implemented function facesOnVertex and summed all the (face normal) * (face area), since the face normals are weighted by face area. Then I normalized this sum with .normalize() to find vertex normal.
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Average+Edge+Lengths'></a>
+                <h2>Average Edge Lengths</h2>
+                <hr>
+                <p>
+                    Using verticesOnVertex(v) with v being the given vertex, I looped through the outputed vertex array and found the sum of the distance between each of those vertices with the given vertex. I then divided this sum with the number of vertices, which is the number of edges touching vertex v itself, to find the average length.
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Twist'></a>
+                <h2>Twist</h2>
+                <hr>
+                <p>
+                    To implement twist, I created a vector3 Euler with the values x = 0, y = vertex's y positoin scaled by the given factor, and z = 0, since you only want to rotate the vertices around the y axis. I then applied this Euler to the vertices' position.
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=large-cube.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Twist=0.5'>Base_Mesh=large-cube.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Twist=0.5</a>
+                    <br>
+                    <img src='results/twist1.png'>
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=large-cube.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Twist=4'>Base_Mesh=large-cube.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Twist=4</a>
+                    <br>
+                    <img src='results/twist2.png'>
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Inflate'></a>
+                <h2>Inflate</h2>
+                <hr>
+                <p>
+                    Inflate scales each vertex's normal by (the given factor) * (average edge length at the vertex). With each corresponding new scaled vector, I can add it to each vertex's original position to move it along the desired direction.
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=teapot.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Inflate=1'>Base_Mesh=teapot.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Inflate=1</a>
+                    <br>
+                    <img src='results/inflate1.png'>
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=teapot.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Inflate=-1'>Base_Mesh=teapot.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Inflate=-1</a>
+                    <br>
+                    <img src='results/inflate2.png'>
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Wacky'></a>
+                <h2>Wacky</h2>
+                <hr>
+                <p>
+                    My wacky function (I also like to think of it as the urchin effect), gets a random value to scale a random vertex in the mesh by in it's normal direction. The number of vertices this scaling is done to is determined by the given factor.
+                </p>
+                <p>
+                    In the shown pictures, you can see that the sphere's vertices are all scaled by a random factor along their normals (all vertices are affected becasue the factor is 1).
+                    For the cheetah, there is a lower factor, so only a few vertices are moved. 
+                </p>
+                <p>
+                    <img src='results/wack1.png'>
+                </p>
+                <p>
+                    <img src='results/wacky2.png'>
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Noise'></a>
+                <h2>Noise</h2>
+                <hr>
+                <p>
+                    By looping through the vertices in the given mesh, we can scale each of the vertices' normals by a (random offset) * (factor) * (average length of edges at the corresponding vertex). I added the new scaled normal to the original position to move the vertex along that scaled normal.
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=hand.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Noise=0.25'>Base_Mesh=hand.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Noise=0.25</a>
+                    <br>
+                    <img src='results/noise1.png'>
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=hand.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Noise=1'>Base_Mesh=hand.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Noise=1</a>
+                    <br>
+                    <img src='results/noise2.png'>
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Uniform+Laplacian+Smoothing'></a>
+                <h2>Uniform Laplacian Smoothing</h2>
+                <hr>
+                <p>
+                    For each iteration (number of iterations is given with iter), I looped through each of the vertices in the given mesh and calculated an offset which is equal to the vertex position scaled by the negative number of vertices around that vertex. Then, the offset is added to each neighboring vertices' position plus the original position of the vertex before multiplied by the (given delta)/(number of neighboring vertices).
+                    The corresponding offset is added to the orignal position of the vertex and this calculation is looped for every iteration.
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=hand-simple.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Smooth=15;0.05;false;false;false'>Base_Mesh=hand-simple.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Smooth=15;0.05;false;false;false</a>
+                    <br>
+                    <img src='results/smoothing1.png'>
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=sphere-2res.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Smooth=100;0.05;false;false;false'>Base_Mesh=sphere-2res.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Smooth=100;0.05;false;false;false</a>
+                    <br>
+                    <img src='results/smoothing2.png'>
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Uniform+Sharpening'></a>
+                <h2>Uniform Sharpening</h2>
+                <hr>
+                <p>
+                    Uniform sharpening calls uniform Laplacian smoothing with a negative given delta.
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=cow.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Sharpen=100;0.001'>Base_Mesh=cow.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Sharpen=100;0.001</a>
+                    <br>
+                    <img src='results/sharpen1.png'>
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=octopus.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Sharpen=100;0.001'>Base_Mesh=octopus.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Sharpen=100;0.001</a>
+                    <br>
+                    <img src='results/sharpen2.png'>
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Truncate'></a>
+                <h2>Truncate</h2>
+                <hr>
+                <p>
+                    Truncate keeps track of the edges of each vertex in the mesh along with each vertex of each edge. Then, I calculated the new vertex on the edges by spliting each edge 
+                    and moving the newly created vector by the given vertex. The original vertex also is moved by this factor. Then, splitFaceMakeEdge is called to split the original face by the newly 
+                    created vertices to create a new edge between those vertices. Finally, joinFaceKillEdgeSimple is called to split the original face with the newly made edges and the original edge's split scaled edges.  
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=dodecahedron.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Truncate=0.448'>Base_Mesh=dodecahedron.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Truncate=0.448</a>
+                    <br>
+                    <img src='results/truncate1.png'>
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=cube.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Selection=;1&Truncate=0.25'>Base_Mesh=cube.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Selection=;1&Truncate=0.25</a>
+                    <br>
+                    <img src='results/truncate2.png'>
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Extrude'></a>
+                <h2>Extrude</h2>
+                <hr>
+                <p>
+                    Extrude firstly notes the original number of faces as this will change during the calculation. For each face, I calculated the new vertices that are the original vertices but shifted by the given factor in the vertices' normal direction. 
+                    I then split the original face and create new edges between the original vertices (according to the original way they were connected) to get new faces. By using splitFaceMakeEdge() on the original face once again, I was able to connect the
+                    newly made vertices with each other in parallel to how their corresponding orignal vertices were connected. By using joinFaceKillEdgeSimple on the edges of the original face, I got rid of that edge and combined the new faces made into one face extruding from the shape's side.
+                    Lastly, I moved all the new vertices along their corresponding normal vector by the given factor.
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=tetrahedron.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Extrude=0.5'>Base_Mesh=tetrahedron.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Extrude=0.5</a>
+                    <br>
+                    <img src='results/extrude1.png'>
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=tetrahedron.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Selection=;2&Extrude=1'>Base_Mesh=tetrahedron.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Selection=;2&Extrude=1</a>
+                    <br>
+                    <img src='results/extrude2.png'>
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Bevel'></a>
+                <h2>Bevel</h2>
+                <hr>
+                <p>
+                    Firstly, I truncated the mesh by the given factor. Then, I calculated the longest edge on the truncated face, which will always be the edge that was not created during the truncation. 
+                    Then, I split the truncated edges in half. I called splitFaceMakeEdge on the longest edge's two corresponding faces to connect the neighboring vertices which were just maade. 
+                    By calling joinFaceKillEdgeSimple on the calculated longest edge, I made a new face which is bounded by the two new edges just made. 
+                    Lastly, joinEdgeKillVert is called on the original two vertices of the longest edge to create an edge between the neighboring vertices. 
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=tetrahedron.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Bevel=0.5'>Base_Mesh=tetrahedron.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Bevel=0.5</a>
+                    <br>
+                    <img src='results/bevel2.png'>
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=cube.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Bevel=0.5'>Base_Mesh=cube.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Bevel=0.5</a>
+                    <br>
+                    <img src='results/bevel1.png'>
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Triangle+Topology'></a>
+                <h2>Triangle Topology</h2>
+                <hr>
+                <p>
+                    Firstly, I triangulated the mesh by finding the vertices on the given face and splitting the face by creating an edge between a vertex and the vertex two vertices over (in an ordered array of vertices). 
+                    Then, I found the midpoints within the faces, which I caluclated by spliting each of the edges on the triangulated face by half. This is in the midpoints helper function since this calculation is used again. 
+                    Next, I joined the new vertices around a face by spliting the face and making edges between each of the new vertices. This is in the subdivide helper function since this calculation is used again. 
+                    Lastly, I made sure that if the user selected a specific face to apply this filter to, the newly created faces would also be shown as selected once the filter is applied by setting the selected status to the new faces.
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=cube.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Tri_Topology=1'>Base_Mesh=cube.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Tri_Topology=1</a>
+                    <br>
+                    <img src='results/trisub1.png'>
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=cube.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Tri_Topology=3'>Base_Mesh=cube.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Tri_Topology=3</a>
+                    <br>
+                    <img src='results/trisub2.png'>
+                </p>
+                    <a href='batch.html?Base_Mesh=cube.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Selection=;1&Tri_Topology=1'>Base_Mesh=cube.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Selection=;1&Tri_Topology=1</a>
+                    <br>
+                    <img src='results/trisub3.png'>
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Loop+Subdivision'></a>
+                <h2>Loop Subdivision</h2>
+                <hr>
+                <p>
+                    In Loop subdivision, I had to keep track of two cases, if the edge was a boundary or not. 
+                    If the edge was a boundary of the selection, I kept track of them within a different array which is calculated and created in the boundaries helper function since this caluclation is used throughout this filter. 
+                    If there are boundary edges, I kept track of the positions of the vertices of these boundaries and the boundary faces. If there are boundary edges, the weight used for the middle vertex is 3/4 (from lecture slides).
+                    Otherwise, I found the vertices neighboring each vertex and kept track of each neighboring vertices' position scaled by beta, which is 3/16 when there are only 3 neighboors and 3/(8 * number of neighboors) in all other cases (according to lecture slides).
+                    The weight in this overall case is 7/16 or 5/8 if there are more than 3 neighboring vertices.
+                    The new vertex positoin is the original vertex position scaled by the calculated weight and added to the already calculated new position from the previous cases listed. 
+                    I then created midpoints along the faces on the current mesh using the midpoints helper function.
+                    If there are no boundary edges pertaining to these new vertices, we calculate the new position of the already calculated midpoints as the combination of the 2 adjacent vertex positions and the opposite vertices's position + 2 opposite vertices' position (calculations according to lecture slides).
+                    Next, I made midpoints with the boundary faces and the subdivided both the current mesh's faces and the boundary faces individually.
+                    Lastly, I set the original vertices's position to the calculated new vertices' positions.
+                    I made sure to set the new faces as selected if there was an original face selected before applying the filter. 
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=cube.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Loop_Subdivision=3'>Base_Mesh=cube.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Loop_Subdivision=3</a>
+                    <br>
+                    <img src='results/loopsub1.png'>
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=dodecahedron.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Selection=;5&Loop_Subdivision=1'>Base_Mesh=dodecahedron.obj&Display_Settings=false;true;flat;false;false;true;false;true;false&Selection=;5&Loop_Subdivision=1</a>
+                    <br>
+                    <img src='results/loopsub2.png'>
+                </p>
+                <p>
+                    <a href='batch.html?Base_Mesh=teapot.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Loop_Subdivision=3'>Base_Mesh=teapot.obj&Display_Settings=false;false;flat;false;false;true;false;true;false&Loop_Subdivision=3</a>
+                    <br>
+                    <img src='results/loopsub3.png'>
+                </p>
+            </div>
+            <div>
+                <hr>
+                <a name='Art+Contest' id="art-contest"></a>
+                <h2>Art Contest</h2>
+                <hr>
+                <p>
+                    This is the output of my wacky filter!
+                    My wacky function (I also like to think of it as the urchin effect), gets a random value to scale a random vertex in the mesh by in it's normal direction. 
+                    The number of vertices this scaling is done to is determined by the given factor.
+                </p>
+                <p>
+                    <img src='results/art-dtruong-wackycow.png'>
+                </p>
+                <p>
+                    <img src='results/art-dtruong-wackyCOS426.png'>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
