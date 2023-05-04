@@ -1,0 +1,186 @@
+<head>
+    <title> COS426 Assignment 5 Cloth Simulation &mdash; Writeup</title>
+    <link href="css/style.css" type="text/css" rel="stylesheet"/>
+</head>
+
+<body>
+<script src="js/student.js"> </script>
+<script src="coursejs/writeup.js"> </script>
+<div class="top">
+<div class="main_div">
+
+<h1> <div class=assignment>COS426 Assignment 5</div> Cloth Simulation &mdash; Writeup</h1>
+<h2>Switch to: <a href='index.html'>Simulation</a></h2>
+<div class='selectable'>
+<h2 id='student'></h2>
+<br>
+
+<div id='collaboration'>
+    <div>
+    Collaboration Statement:
+    </div>
+        <br>
+    <div>
+        <em>
+            Under penalty of academic dishonesty (as outlined in RRR)
+            my digital signature below verifies that the following is true:
+            <ul>
+                <p>
+                    that all images in this writeup were generated directly by my solution code
+                    or provided by the course staff (exception: art contest submissions
+                    may pass through intermediary software like GIMP)
+                </p>
+                <p>
+                    that no other student has viewed my writeup explanations
+                    or my writeup images
+                </p>
+                <p>
+                    that my solution code is my own work; particularly that
+                    my solution was not copied from any other
+                    student's solution code, and that no other student
+                    copied their solution directly code from me
+                </p>
+                <p>
+                    that I did not discuss assignment specifics or view
+                    the solution code of any other student besides that of my (optional) partner
+                </p>
+                <p>
+                    that I have followed all other course collaboration
+                    and course plagiarism policies as written on the course website.
+                </p>
+            </ul>
+        </em>
+        <p>
+            <strong>
+                DANICA TRUONG (dtruong)
+            </strong>
+        </p>
+
+        <p>
+            Collaborated with: PARTNER NAME HERE (partner-netid-here)
+        </p>
+        <br>
+    </div>
+</div>
+<p><hr><p><h2>Table of Contents</h2><p><hr><p>
+
+<ul>
+<li>(0.5) <a href='#Event+Handler'>Event listeners</a></li>
+<li>(1.0) <a href='#Cloth'>Cloth</a></li>
+<li>(1.5) <a href='#Constraints'>Constraints</a></li>
+<li>(1.0) <a href='#Gravity'>Gravity</a></li>
+<li>(1.5) <a href='#Verlet+integration'>Verlet integration</a></li>
+<li>(0.5) <a href='#Floor+collision'>Floor collision</a></li>
+<li>(1.5) <a href='#Sphere+collision'>Sphere collision</a></li>
+<li>(1.5) <a href='#Box+collision'>Box collision</a></li>
+<li>(1.0+) <a href='#Extensions'>Extensions</a></li>
+<li>(1.0+) <a href='#Art+contest'>Art Contest</a></li>
+</ul></div>
+
+<p><hr><p><a name='Event+Listeners'></a><h2>Event Listeners</h2><p><hr><p>
+Briefly describe your implementation of adding event listeners to the scene.
+In particular, list all of the keys that you have bound to an action, and briefly describe the action, as below:
+<ul>
+  <li> "ArrowUp": Move the looked-at particle upwards. </li>
+  <li> "ArrowDown": Move the looked-at particle downwards. </li>
+  <li> "ArrowLeft": Move the looked-at particle leftward. </li>
+  <li> "ArrowRight": Move the looked-at particle rightward. </li>
+  <li> "MouseDown": Recorded the looked at particle's distance from the camera position. </li>
+  <li> "MouseMove + ShiftKey": Move the looked-at particle twoards the mouse position using the ray direction and camera position. </li>
+  <li> "MouseUp": Nullified the particle selected. </li>
+</ul>
+
+
+<p><hr><p><a name='Cloth'></a><h2>Cloth</h2><p><hr><p>
+For each of the constraints, I went through each of the particles in the cloth. 
+
+For Structural constraints, I added constraints between the particle and it's neighboring particle to the right and bottom.
+For Shearing constraints, I added constraints between the particle and it's neighboring particle to the bottom-left and bottom-right.
+The distance is this.restDistance * this.restDistanceS since it is a diagonal constraint. 
+For Bending constraints, I added constraints between the particle and it's neighboring 2 particles to the right and 2 particles to the bottom.
+The distance is this.restDistance * this.restDistanceB since it is a constraint connecting particles 2 particles away. 
+
+<p><hr><p><a name='Constraints'></a><h2>Constraints</h2><p><hr><p>
+For each constraint, I enforced it by finding the correction vector using the given formula on the assignment page. 
+
+<p><hr><p><a name='Gravity'></a><h2>Gravity</h2><p><hr><p>
+Firstly, I made sure to add the force acted on the particle to it's overall netforce. Then, I implemented created a force using 
+the equation F=ma -> (-p.mass * GRAVITY) for the y direction of a particle.
+
+<p><hr><p><a name='Verlet+integration'></a><h2>Verlet integration</h2><p><hr><p>
+To implmement verlet integration, I followed the equation given in the assignment details.
+First, I cloned the current position of the particle. Then, I applied the formula to find the new position.
+I had simplified the formula out to be: new position = 2(currentPosition) - DAMPING * currentPosition - previousPosition(1-DAMPING) + Force/Mass * deltaTime * deltaTime.
+I then updated the previous position to the cloned last position and reset the net force. 
+I then went through all the particles in the cloth and upadted its position using the integration function I just implemented.  
+
+<!--<p><b>Deliverable <a href="/index.html?wireframe=false">(click me)</a></b>: Please include an image of your cloth (not wireframe) with "Corners" pinned and no objects in the scene in its
+final resting state, to demonstrate that your cloth updates its particle positions properly over time.
+-->
+<!-- Sample code for video embedding -->
+<!-- http://localhost:8000/index.html?gravity=false&wave=true&waveFreq=3&wireframe=false&clothColor=11170857&showClothTexture=true -->
+<!--  <video autoplay controls loop>
+  <source src="results/samplevideo.webm" type="video/webm">
+</video> -->
+
+<br><br><img src='results/VerletIntegration.png'>
+
+<p><hr><p><a name='Floor+collision'></a><h2>Floor collision</h2><p><hr><p>
+If the y position of the particle is less than the y position + EPS of the floor, this means that the particle has gone through the floor. Therefore, I set
+that particle's y position to be equal to the floor + EPS. EPS is used to avoid clipping.
+<!--<p><b>Deliverable <a href="/index.html?pinned=OneEdge&wireframe=false">(click me)</a></b>: Please include an image of your cloth (not wireframe) with "OneEdge" pinned and no objects in the scene in its
+final resting state, to demonstrate that your cloth does not clip through the floor.
+-->
+<br><br><img src='results/floorCollision.png'>
+
+<p><hr><p><a name='Sphere+collision'></a><h2>Sphere collision</h2><p><hr><p>
+If the distance between the particle to the position of the sphere (center of the sphere) is less than the radius + EPS, then the particle is inside the sphere and needs to be projected to the 
+surface of the sphere. In order to project the particle to the surface of the sphere, I set posNoFriction to be the original position of the particle subtracted by the sphere's center position, multiplied by the ratio of [the orginal position's distance
+to the center of the sphere] to the radius of the sphere. This allows me to project the particle to the nearest point on the sphere's surface. 
+
+If the position of the particle in the last time step (previous position) was outside the sphere, I accounted for friction. I followed the details from the assignment page for this. Lastly, I called .handleSphereCollision() for every particle in the cloth. 
+<!--<p><b>Deliverable <a href="/index.html?fabricLength=700&pinned=OneEdge&object=Sphere&wireframe=false">(click me)</a></b>: Please include an image of your cloth (not wireframe) with "OneEdge" pinned and the sphere object in the scene
+in a resting state. Increase the size of the cloth to 700 so that it remains draped over the sphere.
+-->
+<br><br><img src='results/sphereCollision.png'>
+
+<p><hr><p><a name='Box+collision'></a><h2>Box collision</h2><p><hr><p>
+To handle box collisions, I compared each of the position's coordinates to the corresponding side of the box (ie:found distance between particle's x coordinate and box's max and min x). I then found the smallest
+length between these comparisions and used that to set the particle's position to the corresponding side. If the previous position of this particle was not inside the box, I accounted for friction by following the 
+details on the assignment page.  
+<!--<p><b>Deliverable <a href="/index.html?fabricLength=700&pinned=TwoEdges&object=Box&wireframe=false">(click me)</a></b>: Please include an image of your cloth (not wireframe) with "TwoEdges" pinned and the box object in the scene
+in a resting state. Increase the size of the cloth to 700 so that it remains draped over the box.
+-->
+<br><br><img src='results/boxCollision.png'>
+
+<p><hr><p><a name='Extensions'></a><h2>Extensions</h2><p><hr><p>
+<ul>
+    <li>Event Handlers Revisited: I added 3 more events based on the user's mouse inputs. If the user clicks down, the particle at the mouse pointer is recorded and 
+        I caulcuated the distance between this particle to the camera's position. When the user moves the mouse while holding down and the shift key, I make the cloth follow
+        the mouse by using the raycaster multiplied by the distance previously calculated and adding camera position to get the new position.(see the event listeners section for more 
+        details on the exact events happening per mouse action).</li>
+        <video autoplay controls loop>
+            <source src="results/mousemove.webm" type="video/webm">
+          </video>
+    <li>Rain: To apply rain, I went through each "rate" raindrop and found a random coordinate. 
+        At the particle that was "hit", I added the impulse (which is just a negative y value with magnitide of the given strength).
+        I added a weaker impusle (by 0.15, which was choosen arbitrarily based on what I thought looked best) to the particles surrounding the hit particle.
+        </li>
+        <video autoplay controls loop>
+            <source src="results/rain.mov" type="video/mp4">
+          </video>
+    <li>Wind: To apply a more interesting wind, I used sinusoidal functions. The used functions were choosen arbitrarily based on what I thought looked best.   </li>
+        <video autoplay controls loop>
+            <source src="results/wind.webm" type="video/webm">
+        </video>
+</ul>
+
+
+<p><hr><p><a name='Art+contest'></a><h2>Art contest</h2><p><hr><p>
+Briefly describe your submission to the art contest. Please include images and/or videos as
+necessary so that we can see what you've done!
+
+</div>
+</div>
+</body>
+</html>
